@@ -1,6 +1,6 @@
 Welcome to the zsummerX wiki!  
   
-### introduction:  
+### Introduction:  
 [![Build Status](https://travis-ci.org/zsummer/zsummerX.svg?branch=master)](https://travis-ci.org/zsummer/zsummerX)  
 zsummerX is an net library with cross-platform, high-performance and lightweight, it's depend by C++11 implementation.    
 the underlying interface meet the standards proactor, and the implementation used by EPOLL LT / IOCP / SELECT, it's can work in windows / linux / mac  and support TCP, UDP, HTTP.  
@@ -10,7 +10,7 @@ the frame interface is advanced and esay, you can use the frame interface to qui
 ** zsummerX is a high-performance lightweight network library that spans win / mac / linux / ios / android platforms and is implemented using the C ++ 11 standard. **
   
   
-### interface implementation   
+### Interface implementation   
 #### Highly flexible bottom interface   
 1.      Comply with the proactor network model, very close to the interface form of boost asio.
 2.      Support TCP, UDP, support multi-threading.
@@ -18,13 +18,13 @@ the frame interface is advanced and esay, you can use the frame interface to qui
 4.      Support timer.
 5.      The user needs to maintain the life cycle management of the cache, and the user needs to have an understanding of the underlying.
    
-#### A frame interface that is easier to use but still flexible enough 
+#### A network framework that is easier to use but still flexible enough 
 1. The Session abstraction is again encapsulated on top of the underlying Socket abstraction, and is unifiedly managed by the SessionMansger singleton.
 2. Encapsulate all implementations except for socket establishment, disconnection, and message processing, and then use the OPTION interface to provide simple and clean custom cuts for the needs of certain flexibility.
 3. Due to the influence of single cases, the multi-threaded solution can only be processed after io processing, and socket io can only be single-threaded. (The game industry and most industries use the environment enough, and if it is not enough, it can be multi-process solution) 
   
    
-#### The frame interface provides the following feature support   
+#### The network framework provides the following feature support   
 1.      Support [proto4z] (https://github.com/zsummer/proto4z) binary protocol (support C ++, lua, C #, SQL).
 2.      Support http protocol, can build a web server or web client with a few lines of code.
 3.      The above two protocols are the default customization solutions in Option. By customizing the default interface of option, any binary protocol can be supported.
@@ -50,7 +50,7 @@ the frame interface is advanced and esay, you can use the frame interface to qui
 23.      The effective use of C ++ 11 shared_ptr and functional, the ease of use of the interface and the stability of the upper layer code are close to the level of the scripting language.
 24.      Provide [lua glue code summer.h summer.cpp] (https://github.com/zsummer/zsummerX/tree/master/example/luaTest), you can use zsummerX directly in lua.  
   
-#### frame options code preview   
+#### Network framework options code preview   
 ```C++
 
         enum ProtoType
@@ -98,19 +98,19 @@ the frame interface is advanced and esay, you can use the frame interface to qui
             SessionOptions _sessionOptions;
         };
 ```   
-### compile conditions   
+### Compile conditions   
 on windows need VS2013 or latter version  
 on linux need g++ 4.7 or latter version  
   
-### how to compile on linux, mac    
+### How to compile on linux, mac    
 cd zsummerX/  
 cmake .  
 make  
 
-### how to compile on windows   
+### How to compile on windows   
 open zsummerX.sln and compile  
 
-### runing frameStressTest  
+### Runing frameStressTest  
 **server**  
 cd zsummerX/example/bin/  
 ./frameStressTest_d 0.0.0.0 81  
