@@ -7,50 +7,50 @@ the underlying interface meet the standards proactor, and the implementation use
 the frame interface is advanced and esay, you can use the frame interface to quick development, it's provide OPTIONS module, don't need to worry problem with flexibility.  
     
   
-**zsummerX是一个跨win/mac/linux/ios/android平台的高性能轻量级网络库, 采用C++11标准实现.**  
+** zsummerX is a high-performance lightweight network library that spans win / mac / linux / ios / android platforms and is implemented using the C ++ 11 standard. **
   
   
 ### interface implementation   
-#### 高度灵活的底层接口    
-1.     遵从proactor网络模型,与boost asio的接口形式非常接近.
-2.     支持TCP, UDP, 支持多线程.  
-3.     支持post接口,可以将任意外部线程的数据和方法通过该接口转移到zsummer的loop中执行.  
-4.     支持定时器.  
-5.     需要使用者维护缓存的生命周期管理, 需要使用者对底层有所了解.  
+#### Highly flexible bottom interface   
+1.      Comply with the proactor network model, very close to the interface form of boost asio.
+2.      Support TCP, UDP, support multi-threading.
+3.      Support the post interface, you can transfer the data and methods of any external thread to the zsummer loop through this interface for execution.
+4.      Support timer.
+5.      The user needs to maintain the life cycle management of the cache, and the user needs to have an understanding of the underlying.
    
-#### 更易用但仍然拥有足够灵活性的frame接口   
-1.      在底层Socket抽象之上再度封装出Session抽象, 并由SessionMansger单例来统一管理.  
-2.      封装掉除了socket建立,断开,消息处理外的所有实现, 然后通过OPTION接口来给需要一定灵活性的需求以简洁干净的定制切口.    
-3.      多线程方案因单例影响, 只能在io处理后进行多线程方案, socket io只能单线程. (游戏行业和大多数行业即使用环境都足够用了, 不够的话可以多进程方案)    
+#### A frame interface that is easier to use but still flexible enough 
+1. The Session abstraction is again encapsulated on top of the underlying Socket abstraction, and is unifiedly managed by the SessionMansger singleton.
+2. Encapsulate all implementations except for socket establishment, disconnection, and message processing, and then use the OPTION interface to provide simple and clean custom cuts for the needs of certain flexibility.
+3. Due to the influence of single cases, the multi-threaded solution can only be processed after io processing, and socket io can only be single-threaded. (The game industry and most industries use the environment enough, and if it is not enough, it can be multi-process solution) 
   
    
-#### frame接口提供以下特性支持    
-1.      支持[proto4z](https://github.com/zsummer/proto4z)的二进制协议(支持C++,lua,C#,SQL).  
-2.      支持http协议, 可以几行代码构建出一个web服务器或者web客户端.    
-3.      以上两种协议为Option中的默认定制方案,通过定制option的默认接口, 可以支持任意二进制协议.        
-4.      支持socket断线重连, 断线重连参数可以通过Option定制.      
-5.      支持socket属性修改,例如NoDelay等属性.  
-6.      session提供定时器消息, 注册该消息后每个session在间隔一定时间后就会收到一次消息, 方便进行例如心跳检测的实现.  
-7.      支持UserParam, 通过让session携带自定义数据,从而可以做到获取一些属性时的O(1)级的性能,而避免在业务层进行map做额外索引.  例如针对Session的socket建立时间的记录, 上一次心跳检测到的记录, 该session是否有进行登录认证,以及相关的记录, 这个特性可以简化上层逻辑的实现并提高性能, 而实现只是几行代码的代价.   
-8.      支持RC4流加密, RC4的加密开启与否, 密钥等都可以通过option进行定制,可以有效防止重放攻击和旁路监听等.     
-9.      tcp支持flash的policy策略认证.  
-10.      支持限制accept的最大连接数, 超出该上限则新accept的socket会立刻踢下去.  
-11.     完善的异常保护机制,在try catch种执行使用者提供的消息处理回调方法,可以做到捕获所有C++的异常从而把异常错误限制在单个消息处理流程中.
-12.     提供运行时的堆栈记录接口, 在抛出异常的时候可以把堆栈信息打印到日志.  
-13.     proto4z的异常均会携带堆栈信息,方便判断错误.
-14.     强大的[log4z日志系统](https://github.com/zsummer/log4z), zsummerX的网络库日志单独使用一个logger,并可以独立控制该logger的日志级别,显示与否等相关控制.  
-15.     提供并包优化方案, 可以一次性最大可能读取和写入网络数据.在洪水测试和实际项目中,该机制的性能提升非常明显.  
-16.     最大发送队列控制, 可以防止因网络异常或者非法攻击造成的内存失控.  
-17.     可以手动控制zsummerX的网络缓冲的创建和销毁, 以提高内存使用的性能.  
-18.     完备的统计信息,包括底层io次数, 吞吐量, 数据包发送和接受次数, 发送队列长度, 限制free内存数量和使用率等统计信息.  
-19.     提供友好简洁的网络关停方案.  
-20.     一键编译, 不依赖其他任何需要预先编译的依赖库, down下代码直接在任意平台上可以编译出静态库以及测试文件.  
-21.     LoopEvent支持立即返回模式和无事件等待模式, 前者可以寄生在类似U3D的update中, 方便嵌入客户端.  
-22.     简洁务实的实现方案, 代码量小于6000行.  
-23.     对C++11的shared_ptr和functional的有效使用, 接口的易用性和上层代码的稳定性接近脚本语言的水平.   
-24.     提供[lua胶水代码 summer.h summer.cpp](https://github.com/zsummer/zsummerX/tree/master/example/luaTest), 可以直接在lua中使用zsummerX.    
+#### The frame interface provides the following feature support   
+1.      Support [proto4z] (https://github.com/zsummer/proto4z) binary protocol (support C ++, lua, C #, SQL).
+2.      Support http protocol, can build a web server or web client with a few lines of code.
+3.      The above two protocols are the default customization solutions in Option. By customizing the default interface of option, any binary protocol can be supported.
+4.      Support socket reconnection, disconnection reconnection parameters can be customized through Option.
+5.      Support socket attribute modification, such as NoDelay and other attributes.
+6.      The session provides timer messages. After registering the message, each session will receive a message after a certain interval, which is convenient for the implementation of heartbeat detection, for example.
+7.      Support UserParam, by allowing the session to carry custom data, so that you can achieve O (1) level performance when acquiring some attributes, and avoid additional indexing of maps in the business layer. For example, the record of the socket establishment time for Session , The record detected by the last heartbeat, whether the session was authenticated for login, and related records, this feature can simplify the implementation of upper-layer logic and improve performance, but the implementation is only the cost of a few lines of code.  
+8.      Support RC4 stream encryption, whether RC4 encryption is enabled or not, keys, etc. can be customized through options, which can effectively prevent replay attacks and bypass monitoring.
+9.      tcp supports flash policy authentication.
+10.      Support to limit the maximum number of accept connections. If the limit is exceeded, the socket of the new accept will be kicked immediately.
+11.      Perfect exception protection mechanism, execute the message processing callback method provided by the user in try catch, which can catch all C ++ exceptions and limit exception errors to a single message processing flow.
+12.      Provide a stack recording interface at runtime, which can print the stack information to the log when an exception is thrown.
+13.      Proto4z exceptions will carry stack information, which is convenient for judging errors.
+14.      Powerful [log4z log system] (https://github.com/zsummer/log4z), zsummerX's network library log uses a logger alone, and can independently control the logger's log level, display or other related controls.
+15.      Provide a package optimization solution that can read and write network data at the maximum possible time. The performance improvement of this mechanism is very obvious in flood tests and actual projects.
+16.      Maximum send queue control, can prevent memory out of control caused by network abnormalities or illegal attacks.
+17.      You can manually control the creation and destruction of zsummerX's network buffer to improve the performance of memory usage.
+18.      Complete statistical information, including low-level io times, throughput, packet sending and receiving times, send queue length, limit free memory number and usage statistics.
+19.      Provide a friendly and concise network shutdown solution.
+20.      One-click compilation, does not depend on any other dependent libraries that need to be pre-compiled. Down code can be compiled directly on any platform to compile static libraries and test files.
+21.      LoopEvent supports immediate return mode and no event waiting mode, the former can be parasitic in U3D-like update, which is convenient for embedding in the client.
+22.      Simple and pragmatic implementation scheme, the code size is less than 6000 lines.
+23.      The effective use of C ++ 11 shared_ptr and functional, the ease of use of the interface and the stability of the upper layer code are close to the level of the scripting language.
+24.      Provide [lua glue code summer.h summer.cpp] (https://github.com/zsummer/zsummerX/tree/master/example/luaTest), you can use zsummerX directly in lua.  
   
-#### frame options 代码预览   
+#### frame options code preview   
 ```C++
 
         enum ProtoType
